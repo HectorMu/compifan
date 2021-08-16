@@ -1,35 +1,38 @@
-import UI from '/js/UserInterface.js'
 import ExpressionFinder from '/js/AL-ExpressionFinder.js'
-const ui = new UI()
 const expressionfinder = new ExpressionFinder()
-
 export default class AnalizadorLexico{
-    constructor(){
+    constructor(ui){
         //initialazing variables
+        this.ui = ui
         this.tokenTable = []
         this.tokenObject = {}
         this.btnCompilar  =  document.getElementById('BtnCompilar')
         this.Codigo = document.getElementById('TxtCodigo')
-        this.tokens = ""  
     }
     Compile(){
-        this.btnCompilar.onclick = ()=>{
             //cleaning the table from UserInterface File
-            ui.CleanTable(this.tokenTable) 
-            this.SplitEntry()   
-        }
+            this.ui.CleanTable(this.tokenTable)
+            this.SaveTokens(this.SplitEntry(this.Codigo))
+            //analizadorsintactico.ErrorFinder(this.GetTokenArray())
     }
-    SplitEntry(){
-        this.tokens = this.Codigo.value.split(/[\s\n]+/)   
-        for(let i = 0; i < this.tokens.length; i++){
-                this.tokenObject = {
-                    index: i+1,
-                    token: this.tokens[i],
-                    description: expressionfinder.FindExpresion(this.tokens[i])
-                }
-                this.tokenTable.push(this.tokenObject) 
-            }  
-            //rendering the token table from UserInterface file
-            ui.RenderTokenTable(this.tokenTable) 
+    GetTokenArray(){
+        let tokenArray = this.tokenTable
+        return tokenArray
+    }
+    SplitEntry(codigo){
+        let tokens = codigo.value.split(/[\s\n]+/)
+        return tokens
+    }
+    SaveTokens(tokens){
+        for(let i = 0; i < tokens.length; i++){
+            this.tokenObject = {
+                index: i+1,
+                token: tokens[i],
+                description: expressionfinder.FindExpresion(tokens[i])
+            }
+            this.tokenTable.push(this.tokenObject)
+        }
+        //rendering the token table from UserInterface file
+        this.ui.RenderTokenTable(this.tokenTable)
     }
 }

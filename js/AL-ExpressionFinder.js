@@ -17,7 +17,7 @@ export default class ExpressionFinder{
             response ="Parametros direccion de giro"
         }
         if(this.isVelocity(token)){
-            response ="Parametros direccion de Velocidad"
+            response ="Parametros de Velocidad"
         }
         if(this.isDelimiterOpen(token)){
             response = "Delimitador de apertura"
@@ -33,6 +33,9 @@ export default class ExpressionFinder{
         }
         if(this.isMinusOperator(token)){
             response ="Operador de resta"
+        }
+        if(this.isInstruccionParams(token)){
+            response = "Parametros de instruccion"
         }
         return  response
     }
@@ -116,6 +119,14 @@ export default class ExpressionFinder{
         let matchStatus = false
         const minus = /\w\-\-/
         if(minus.test(token)){
+            matchStatus = true
+        }
+        return matchStatus  
+    }
+    isInstruccionParams(token){
+        let matchStatus = false
+        const params = /\(\w*\d*\)/
+        if(params.test(token)){
             matchStatus = true
         }
         return matchStatus  
