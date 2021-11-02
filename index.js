@@ -1,7 +1,7 @@
 //all files imports 
 import AnalizadorLexico from './js/AnalizadorLexico.js'
 import AnalizadorSintactico from './js/AnalizadorSintactico/AnalizadorSintactico.js'
-import UI from '/js/UserInterface.js'
+import UI from './js/UserInterface.js'
 //all object instances for each file class
 const ui = new UI()
 const analizadorlexico = new AnalizadorLexico(ui)
